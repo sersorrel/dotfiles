@@ -1,0 +1,7 @@
+--smart-case
+--max-columns
+1000
+--max-columns-preview
+--multiline-dotall
+--type-add
+cfg:*.cfg

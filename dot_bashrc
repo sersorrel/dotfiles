@@ -1,0 +1,252 @@
+#!/usr/bin/env bash
+
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# Typically executed each time a terminal emulator is opened.
+
+# If not running interactively, don't do anything
+case $- in
+	*i*) ;;
+	*) return;;
+esac
+
+middle=' ...'
+tail='done'
+# cols="$(tput cols)"
+cols=32
+begin() {
+	:
+	# printf "%s$middle%$(( cols - ${#1} - ${#middle} - ${#tail} ))s" "$1"
+}
+end() {
+	:
+	# printf '%s\n' "$tail"
+}
+
+notices() {
+	if [[ -e ~/.msmtp.log ]]; then
+		printf 'The msmtp log file exists.\n'
+	fi
+
+	if [[ -e /var/run/reboot-required ]]; then
+		printf 'The system needs a reboot.\n'
+	fi
+	if ! ssh-add -l >/dev/null; then
+		printf 'No SSH keys are known to the agent.\n'
+	fi
+}
+what() {
+	notices
+}
+
+begin 'Loading internals'
+	stty -ixon  # Enable ^S for going forwards in time in an i-search
+	shopt -s histverify  # Don't immediately execute commands with a history expansion
+	if [ -f ~/.bash_internals ]; then
+		source ~/.bash_internals
+	fi
+	export GPG_TTY="$(tty)"
+end # Loading internals
+
+begin 'Colouring prompt'
+	if command -v starship >/dev/null; then
+		eval "$(starship init bash)"
+	else
+		# set a fancy prompt (non-color, unless we know we "want" color)
+		case "$TERM" in
+			xterm-color|*-256color) color_prompt=yes;;
+		esac
+
+		# uncomment for a colored prompt, if the terminal has the capability; turned
+		# off by default to not distract the user: the focus in a terminal window
+		# should be on the output of commands, not on the prompt
+		force_color_prompt=yes
+
+		if [ -n "$force_color_prompt" ]; then
+			if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+				# We have color support; assume it's compliant with Ecma-48
+				# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+				# a case would tend to support setf rather than setaf.)
+				color_prompt=yes
+			else
+				color_prompt=
+			fi
+		fi
+
+		if [ "$color_prompt" = yes ]; then
+			# git_ps1 docs: https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+			export GIT_PS1_SHOWDIRTYSTATE=1
+			export GIT_PS1_SHOWSTASHSTATE=1
+			export GIT_PS1_SHOWUNTRACKEDFILES=1
+			export GIT_PS1_SHOWUPSTREAM="auto"
+			export GIT_PS1_DESCRIBE_STYLE="tag"
+
+			function _setup_prompt {
+				prompt_displayed=1
+
+				function rgb_fg {
+					printf '\[\e[38;2;%d;%d;%dm\]' "0x$1" "0x$2" "0x$3"
+				}
+				function rgb_bg {
+					printf '\[\e[48;2;%d;%d;%dm\]' "0x$1" "0x$2" "0x$3"
+				}
+
+				# Formatting
+				local reset="\[\e[0m\]"
+				local bold="\[\e[1m\]"
+				local dim="\[\e[2m\]"
+				local unbold="\[\e[21m\]"
+				local undim="\[\e[22m\]"
+				# Foreground colours
+				local fg_reset="\[\e[39m\]"
+				local fg_black="\[\e[30m\]"
+				local fg_red="\[\e[31m\]"
+				local fg_green="\[\e[32m\]"
+				local fg_yellow="\[\e[33m\]"
+				local fg_blue="\[\e[34m\]"
+				local lightgrey="\[\e[37m\]"
+				local lightred="\[\e[91m\]"
+				local lightgreen="\[\e[92m\]"
+				# Background colours
+				local bg_reset="\[\e[49m\]"
+				local bg_black="\[\e[40m\]"
+				local bg_red="\[\e[41m\]"
+				local bg_green="\[\e[42m\]"
+				local bg_yellow="\[\e[43m\]"
+				local bg_blue="\[\e[44m\]"
+
+				local sep=$'\ue0ba'
+
+				local notices=""
+				if [[ "$(notices)" ]]; then
+					notices="$bold$fg_yellow❗ $unbold$fg_reset"
+				fi
+
+				local virtual_env=""
+				if [[ -n "$PIPENV_ACTIVE" ]]; then
+					virtual_env="$bold$fg_yellow✨ $unbold$fg_reset"
+				elif [[ -n "$VIRTUAL_ENV" ]]; then
+					virtual_env="$bold$fg_green🐍 $unbold$fg_reset"
+				fi
+
+				local chroot=""
+				# shellcheck disable=SC2154
+				if [[ -n "$debian_chroot" ]]; then
+					chroot="($debian_chroot) "
+				fi
+				local user_host="\\u@\\h"
+				local path="\\w"
+				local git_branch="\$(__git_ps1 ' (%s)')"
+
+				local return_value
+				if [[ "$ret" -eq 0 ]]; then # NB: $ret is set in _command_start
+					return_value="$lightgreen"
+				else
+					return_value="$lightred"
+				fi
+				return_value="$return_value$ret$reset"
+
+				# test by running e.g. `command_start_time=$(date -d "69 minutes ago" +%s)`
+				local time_taken=""
+				if [[ -n "$command_start_time" ]]; then
+					time_taken="$(( $(date +%s) - command_start_time ))"
+					if [[ "$time_taken" -ge 3600 ]]; then
+						time_taken=" ($(( time_taken / 3600 ))h$(( time_taken % 3600 / 60 ))m$(( time_taken % 60 ))s)"
+					elif [[ "$time_taken" -ge 60 ]]; then
+						time_taken=" ($(( time_taken / 60 ))m$(( time_taken % 60 ))s)"
+					elif [[ "$time_taken" -ge 5 ]]; then
+						time_taken=" (${time_taken}s)"
+					else
+						time_taken=""
+					fi
+				fi
+
+				local prompt='\$'
+
+				# NB: we save the cursor position at the start of the prompt (\e[s) for use in _command_start
+				# PS1="\[\e]0;\u@\h:\w\a\e[5 q\e[s\]$(rgb_fg eb db b2)${sep}${fg_reset}$(rgb_bg eb db b2) --:-- ${notices}${virtual_env}${chroot}$(rgb_fg b8 bb 26)${sep}${fg_reset}$(rgb_bg b8 bb 26) ${user_host} $(rgb_fg 8e c0 7c)${sep}${fg_reset}$(rgb_bg 8e c0 7c) ${path} $(rgb_fg f9 f5 d7)${sep}${fg_reset}${bg_reset}${git_branch}\n${return_value}${time_taken} ${prompt} "
+				PS1="\[\e]0;\u@\h:\w\a\e[5 q\]\n$(rgb_fg eb db b2)${sep}${fg_reset}$(rgb_bg eb db b2) 🦉 ${notices}${virtual_env}${chroot}$(rgb_fg b8 bb 26)${sep}${fg_reset}$(rgb_bg b8 bb 26) ${user_host} $(rgb_fg 8e c0 7c)${sep}${fg_reset}$(rgb_bg 8e c0 7c) ${path} $(rgb_fg f9 f5 d7)${sep}${fg_reset}${bg_reset}${git_branch}\n${return_value}${time_taken} ${prompt} "
+			}
+			PROMPT_COMMAND="_setup_prompt; $PROMPT_COMMAND"
+			# PS0 doesn't get printed if the command was empty, so this is significantly superior.
+			function _command_start {
+				ret=$?
+				if [[ -z "$prompt_displayed" ]]; then
+					# we've already run since the last prompt
+					return
+				fi
+				unset prompt_displayed
+
+				printf '\e[ q'
+
+				command_start_time=$(date +%s)
+				# Save cursor position
+				# NB: we do the manual save/load here, with the tty-assisted one in
+				# PROMPT_COMMAND, because if we do the manual one in PROMPT_COMMAND,
+				# then it eats any input we made before the shell was first initialised
+				# printf '\033[6n'
+				# read -s -d '[' # don't care about the start of the sequence
+				# read -s -d R output_start_position
+				# <https://redandblack.io/blog/2020/bash-prompt-with-updating-time/>
+				# reset cursor (to block); restore cursor position (to start of
+				# prompt); print the time; move cursor back to manually-saved position
+				# (at start of command output)
+				# printf '\e[ q\e[u\e[38;2;235;219;178m\e[39m\e[48;2;235;219;178m %s\e[%sH\e[39;49m' "$(date +%R)" "$output_start_position"
+			}
+		trap _command_start DEBUG # executed for each "simple command"
+		else
+			# No colour support, probably shouldn't try to do anything too flashy so
+			# leave the prompt as it is by default.
+			PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+		fi
+		unset color_prompt force_color_prompt
+	fi
+end # Colouring prompt
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+begin 'Setting up aliases'
+	if [ -f ~/.bash_aliases ]; then
+		source ~/.bash_aliases
+	fi
+end # Setting up aliases
+
+begin 'Starting keychain'
+	# keychain starts ssh-agent if it's not running, otherwise it sets the appropriate environment variables.
+	# shellcheck disable=SC2046
+	eval $(keychain --eval --quiet --noask)
+end # Starting keychain
+
+begin 'Loading completion'
+	# Don't autocomplete files that end with these suffixes.
+	FIGNORE=".egg-info:__pycache__:.pyc:.swp:.git:.mypy_cache"
+	# However, do autocomplete them if it's the only possible completion.
+	shopt -u force_fignore
+	# enable programmable completion features (you don't need to enable
+	# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+	# sources /etc/bash.bashrc).
+	if ! shopt -oq posix; then
+		if [ -f /usr/share/bash-completion/bash_completion ]; then
+			source /usr/share/bash-completion/bash_completion
+		elif [ -f /etc/bash_completion ]; then
+			source /etc/bash_completion
+		fi
+	fi
+end
+
+# https://github.com/nvm-sh/nvm/issues/1242#issuecomment-346946356
+nvm() {
+	unset nvm
+	[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+	[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+	nvm "$@"
+}
+
+notices | sed 's/^/! /'
+
+# [ -e ~/.motd ] && shuf -n1 ~/.motd
+
+unset begin end middle tail cols

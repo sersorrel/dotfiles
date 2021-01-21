@@ -1,0 +1,15 @@
+session_name: misc
+start_directory: "~"
+suppress_history: false
+windows:
+- window_name: logs
+  start_directory: /var/log
+  layout: main-horizontal
+  panes:
+    - focus: true
+      shell_command: dmesg -w
+    - journalctl -fnall
+- layout: main-vertical
+  focus: true
+  panes:
+    -

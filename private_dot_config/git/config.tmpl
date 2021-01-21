@@ -1,0 +1,143 @@
+[user]
+    name = Ash Holland
+    email = {{ .email }}
+[core]
+    editor = vim
+    # Watch for trailing spaces, trailing blank lines and spaces before tabs at the start of a line.
+    whitespace = blank-at-eol,blank-at-eof,space-before-tab
+    # Abbreviate hashes to 9 digits to reduce the chance of a collision.
+    abbrev = 9
+    pager = some
+[color]
+    # Use colours if outputting to a terminal.
+    ui = auto
+[commit]
+    # Show the diff that's about to be committed in the commit message.
+    verbose = true
+    # Set the default commit message (doesn't affect the comments from Git itself).
+    template = ~/.config/git/message
+[diff]
+    # Hopefully generate easier-to-read diffs.
+    indentHeuristic = true
+    # Detect file copies as well as renames.
+    renames = copies
+    # Generate (typically) better diffs, even if they might be slightly less efficient.
+    algorithm = histogram
+    # Highlight trailing whitespace in diffs.
+    wsErrorHighlight = all
+    # Show new commits in submodules.
+    submodule = log
+    # Show when code was moved.
+    colorMoved = true
+[fetch]
+    # Prune on fetch by default.
+    prune = true
+[init]
+    defaultBranch = main
+    templateDir = ~/.config/git/template
+[interactive]
+    # Don't require hitting enter in "git add --patch" etc. (if possible)
+    singleKey = true
+[log]
+    # Use sensible dates in logs.
+    date = iso
+[merge]
+    # <<<<<<<
+    # one side
+    # |||||||
+    # original
+    # =======
+    # other side
+    # >>>>>>>
+    conflictStyle = diff3
+    # Don't do fast-forward merges by default!
+    ff = false
+[pull]
+    # Refuse to pull if it would result in a merge.
+    ff = only
+[push]
+    # Do The Right Thing when running "git push".
+    default = current
+    # Push (annotated) tags that are reachable from the refs being pushed.
+    followTags = true
+[rebase]
+    # Automatically place fixup! and squash! commits in the right place in the todo-list.
+    autoSquash = true
+    # Fail hard if a commit line is removed from an interactive rebase todo-list.
+    missingCommitsCheck = error
+[sendemail]
+    # Always review patches before sending them.
+    annotate = true
+    # Always ask before sending email.
+    confirm = always
+[stash]
+    # Don't require -p to show stash patches.
+    showPatch = true
+[submodules]
+    # Automatically --recurse-submodules, except for `git clone`.
+    recurse = true
+[tag]
+    # Sort in version order rather than lexicographic order.
+    sort = version:refname
+[versionsort]
+    # Make versions sort sensibly -- any version suffix listed here will sort before the actual release, rather than after.
+    suffix = a
+    suffix = -a
+    suffix = alpha
+    suffix = -alpha
+    suffix = b
+    suffix = -b
+    suffix = beta
+    suffix = -beta
+    suffix = pre
+    suffix = -pre
+    suffix = rc
+    suffix = -rc
+[alias]
+    # Simple aliases:
+    cherrypick = cherry-pick
+    man = help
+    s = status
+    unstage = reset HEAD --
+    update = fetch --all --prune
+    ff = merge --ff-only
+    ffs = ff --no-stat
+    hash = "!f() { git rev-parse ${1:-HEAD} | GREP_COLORS='ms=34;1' grep --color $(git rev-parse --short=0 ${1:-HEAD}); }; f"
+    ref = show -s --pretty=reference
+    # reset last commit but keep changes in working directory and index
+    uncommit = reset --soft HEAD~1
+    # Lists:
+    staged = diff --cached
+    added = diff --cached
+    remotes = remote -vv
+    branches = branch -vv --list
+    stashes = stash list
+    aliases = "!git config -l | grep alias | cut -c 7-"
+    tags = tag --list
+    # Logging:
+    # [yellow]hash[auto]ref_names [white]commit_message [cyan]author_name [green]author_relative_date [normal][dim](signature_status)
+    ls = log --pretty=format:'%C(yellow)%h%C(auto)%d %C(reset)%s %C(cyan)%an %C(green)%ar %C(reset)%C(dim)(%G?)%C(nodim)' --decorate
+    graph = !git ls --graph
+    g = !git graph
+    aa = !git graph --exclude=refs/stash --all
+    faa = !git aa --format=fuller
+    # Show last commit (without the diff).
+    last = "!git --no-pager log -n 1 HEAD"
+    # Show last commit, with the diff and with even more details than "git show".
+    details = log -n 1 -p --format=fuller
+    # Show difference from branch to upstream.
+    changes = !git ls ${1:-@}...${1:-}@{u}
+    fchanges = !git log ${1:-@}...${1:-}@{u}
+    # Show the branches that contain a commit.
+    descended-from = branch -a --contains
+    # Triangular workflow optimisations.
+    clonet = clone --origin fork
+    brancht = branch --track
+    pusht = push fork
+    upstream = "!f() { git remote add -f upstream $1; git remote set-head --auto upstream; }; f"
+    # Delete the current branch.
+    yeet = "!f() { branch_name=$(git symbolic-ref --short HEAD) && read -p \"Really yeet $branch_name? (ctrl-c if not)\" _ && git switch @{-1} && git branch -D \"$branch_name\"; }; f"
+[include]
+    path = config_priv
+
+# vim: set sw=4 et:

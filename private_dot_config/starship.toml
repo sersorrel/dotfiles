@@ -1,0 +1,75 @@
+format = '🦉 $all'
+
+[character]
+success_symbol = '[\$](bold green)'
+error_symbol = '[\$](bold red)'
+vicmd_symbol = '[£](bold green)'
+
+[directory]
+truncation_length = 7
+truncate_to_repo = false
+truncation_symbol = '…/'
+read_only = ' 🔒'
+read_only_style = ''
+
+[git_branch]
+only_attached = true
+
+[git_commit]
+only_detached = false
+tag_disabled = false
+
+[git_status]
+untracked = '!'
+modified = '~'
+conflicted = '|||'
+# ahead = '↑'
+# behind = '↓'
+ahead = ">"
+behind = "<"
+diverged = "<>"
+
+[jobs]
+threshold = 0
+symbol = '✦ '
+
+[shlvl]
+disabled = false
+symbol = '↕️ '
+
+[status]
+disabled = false
+symbol = ''
+
+[custom.ssh_keys]
+description = "SSH key count"
+when = 'ssh-add -l | grep -v -q "no identities"'
+command = 'ssh-add -l | grep -v "no identities" | wc -l'
+format = '$symbol[$output]($style) '
+shell = ["sh"]
+symbol = '🔑 '
+style = 'bold fg:green'
+
+[custom.ssh_no_keys]
+description = 'SSH missing keys'
+when = 'ssh-add -l | grep -q "no identities"'
+command = 'echo 0'
+format = '$symbol[$output]($style) '
+shell = ["sh"]
+symbol = '🔑 '
+style = "bold fg:red"
+
+[custom.reboot_required]
+description = 'reboot required'
+when = 'test -e /var/run/reboot-required'
+command = 'echo 0'
+format = '$symbol'
+symbol = '⏻ '
+style = "bold fg:red"
+
+[custom.bgfill]
+description = 'fill remainder of line'
+command = 'echo 0'
+style = 'bg:#f2e5bc'  # gruvbox light bg0_s
+when = 'true'
+format = "[\u001B\\[K]($style)"

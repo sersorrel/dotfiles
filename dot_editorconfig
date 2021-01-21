@@ -1,0 +1,31 @@
+root = true
+
+; List of all properties:
+; <https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties>
+
+[*]
+insert_final_newline = true
+; Not yet implemented: <https://github.com/editorconfig/editorconfig/issues/208>
+; trim_trailing_whitespace = modified
+
+[*.{py,toml,cfg}]
+charset = utf-8
+indent_style = space
+indent_size = 4
+quote_type = double
+
+[*.{md,rst}]
+indent_style = space
+indent_size = 2
+max_line_length = 72
+
+[Makefile]
+indent_style = tab
+
+[*.{html,jinja2,css,scss,sass,less,js,json,yaml}]
+indent_style = space
+indent_size = 2
+
+[*.bib]
+indent_style = space
+indent_size = 2

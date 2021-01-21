@@ -1,0 +1,8 @@
+#!/bin/sh
+printf 'autorandr: start postswitch\n' >> ~/.xsession-errors
+if [ -e ~/.fehbg ]; then
+	printf 'autorandr: running fehbg\n' >> ~/.xsession-errors
+	~/.fehbg
+else
+	printf 'autorandr: not running fehbg' >> ~/.xsession-errors
+fi

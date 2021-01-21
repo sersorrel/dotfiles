@@ -1,0 +1,8 @@
+rofi.modi: window,run,ssh,drun
+rofi.theme: /usr/share/rofi/themes/gruvbox-dark.rasi
+rofi.show-icons: true
+rofi.tokenize: true
+rofi.monitor: -1  # -1: the currently-focused monitor; -4, the monitor with the currently-focused window
+rofi.drun-match-fields: name
+rofi.drun-icon-theme: Paper
+rofi.levenshtein-sort: true

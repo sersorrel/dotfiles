@@ -1,0 +1,105 @@
+[theme]
+name = "gruvbox-light"
+[theme.overrides]
+# Be transparent unless it's something important
+idle_bg = "#FFFFFF44"
+info_bg = "#FFFFFF44"
+good_bg = "#FFFFFF44"
+info_fg = "#3C3836FF"
+good_fg = "#3C3836FF"
+alternating_tint_bg = "#00000000"
+warning_fg = "#FBF1C7FF"
+separator = ""
+
+[icons]
+name = "awesome"
+[icons.overrides]
+time = "\uF133 " # calendar
+net_wired = "\uF0AC"
+net_wireless = "\uF1EB"
+
+[[block]]
+block = "custom"
+command = "test \"$(systemctl is-enabled --user dunst)\" = masked && printf '\uF1F6'"
+
+[[block]]
+block = "disk_space"
+alias = "\uF0A0" # hdd
+unit = "GiB"
+
+[[block]]
+block = "disk_space"
+alias = "\uf2ed" # trash-alt
+unit = "GiB"
+path = "/tmp"
+warning = 0.5
+alert = 0.1
+
+[[block]]
+block = "net"
+device = "wlp3s0"
+speed_up = false
+speed_down = false
+
+[[block]]
+block = "net"
+device = "enp4s0f1"
+speed_up = false
+speed_down = false
+
+[[block]]
+block = "custom"
+command = "if [ \"$(bluetooth)\" = \"bluetooth = on\" ]; then printf '\uf294'; else printf '\uf294 ×'; fi"
+on_click = "bluetooth toggle"
+
+[[block]]
+block = "memory"
+format_mem = "{Mug}/{MTg}"
+format_swap = "{SUg}/{STg}"
+warning_mem = 90
+warning_swap = 90
+
+[[block]]
+block = "custom"
+command = "test \"$(nvctl gpu query)\" = nvidia && { printf '\uf26c '; nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | sed -E 's@([[:digit:]]*)([[:digit:]])[[:digit:]]{2}, ([[:digit:]]*)([[:digit:]])[[:digit:]]{2}@\\1.\\2/\\3.\\4@'; }"
+interval = 10
+
+[[block]]
+block = "custom"
+cycle = ["con --icon", "coff --icon"]
+interval = 1000000000
+
+[[block]]
+block = "battery"
+format = "{percentage}% {time} {power}W"
+upower = true
+
+[[block]]
+block = "kdeconnect"
+format = "{bat_charge}%"
+format_disconnected = ""
+bat_warning = 20
+bat_critical = 10
+
+[[block]]
+block = "temperature"
+chip = "coretemp-isa-0000"
+collapsed = false
+format = "{average}°"
+idle = 80
+info = 90
+warning = 100
+
+[[block]]
+block = "uptime"
+
+[[block]]
+block = "custom"
+# Hack: this refreshes the next lecture on click.
+# cycle = ["printf '\uF19C '; paste -d ' ' <(uoyweek) <(printf '•') <(pango-escape \"$(next-lecture)\")"]
+cycle = ["printf '\uF19C '; paste -d ' ' <(uoyweek)"]
+interval = 120
+
+[[block]]
+block = "time"
+format = "%A %F %-I:%M %P"

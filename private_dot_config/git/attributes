@@ -1,0 +1,8 @@
+*.c diff=cpp
+*.cpp diff=cpp
+*.css diff=css
+*.html diff=html
+*.md diff=markdown
+*.pas diff=pascal
+*.php diff=php
+*.py diff=python

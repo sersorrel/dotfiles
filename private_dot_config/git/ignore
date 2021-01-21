@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.pyc
+/build/
+/dist/
+*.egg-info
+*.egg
+/.eggs/
+venv/
+.venv/
+.mypy_cache/
+
+# JetBrains IDEs
+.idea/
+
+# Linux backup files
+*~
+
+# Temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# Vim swap files
+.*.sw?
+
+# ctags
+/tags
+
+# vim-gutentags
+/tags.temp
+/tags.lock
+
+# tmuxp layout files
+.tmuxp.yaml
+
+# LaTeX
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+
+*.o
+
+/.vim/
+/tags

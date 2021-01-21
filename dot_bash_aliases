@@ -1,0 +1,237 @@
+#!/bin/bash
+
+test -e ~/src/rn/rn && source ~/src/rn/rn
+
+alias t='~/src/t/t.py --task-dir "$HOME" --list TASKS'
+alias jrnk=jrnl
+alias yadm2='yadm --yadm-repo ~/.yadm/repo2.git'
+chez() {
+	if [ $# -eq 0 ]; then
+		chezmoi cd
+	else
+		chezmoi "$@"
+	fi
+}
+
+
+alias trash-restore='restore-trash'
+alias xsel='xsel --logfile "$XDG_CACHE_HOME/xsel/xsel.log"'
+if [[ -n "$TMUX" ]]; then
+	alias irssi='TERM=screen-256color irssi'
+fi
+mux() {
+	tmux attach -t "${1:-misc}" || tmux new -s "${1:-misc}"
+}
+alias yeet='printf "really yeet %s? (ctrl-c if not)" "$(pwd)" && read && rm -r "$(pwd)" && cd ..'
+
+words() {
+	num=${1:-2}
+	sep=${2:--}
+	cut -f2 ~/Desktop/eff_large_wordlist.txt | shuf -rn"$num" | paste -sd"$sep"
+}
+
+set-wallpaper() {
+	path="${1:?Usage: set-wallpaper IMAGE}"
+	ln -sf "$(realpath "$path")" ~/Pictures/Wallpapers/default
+	feh --no-fehbg --bg-fill ~/Pictures/Wallpapers/default
+}
+
+mkvenv() {
+	local python="${1:?Python executable name required}"
+	local venv="${2:-venv}"
+	shift
+	shift || true
+	"$python" -m venv "$venv" "$@"
+	# TODO: with Python 3.8+, pass `--upgrade-deps` above instead of running this.
+	"$venv"/bin/pip install -U pip setuptools wheel
+}
+venv() {
+	. "${1:-venv}"/bin/activate
+}
+
+prompt() {
+	while true; do
+		read -ren1 -p "$1 [yn] " REPLY
+		case "$REPLY" in
+			[yY])
+				return 0 ;;
+			[nN])
+				return 1 ;;
+			*)
+				case "$2" in
+					[yY]) return 0 ;;
+					[nN]) return 1 ;;
+				esac ;;
+		esac
+	done
+}
+
+len() {
+	for s in "$@"; do
+		echo "${#s}"
+	done
+}
+
+diary() {
+	local diary_path=~/diary
+	# TODO: stop parsing output from ls
+	if [[ -z "$1" ]]; then
+		# Open today's file in vim, with the last entry in the alternate file
+		local today_file="$(date "--date=$1" "+$diary_path/%Y/%m/%d.md")"
+		local last_file="$(ls -v1 $diary_path/*/*/*\.md | tail -n 1)"
+		if [[ "$last_file" = "$today_file" ]]; then
+			last_file="$(ls -v1 $diary_path/*/*/*\.md | tail -n 2 | head -n 1)"
+		fi
+		# Set the alternate file to $last_file, see <https://vi.stackexchange.com/a/8260/12447>
+		vim "+badd $last_file" "+let @#='$last_file'" "$today_file"
+	else
+		if [[ "$1" == "last" ]]; then
+			# Parsing output of ls, wooo
+			local f="$(ls -v1 $diary_path/*/*/*\.md | tail -n 1)"
+		else
+			date "--date=$1" >/dev/null || return 1
+			local f="$(date "--date=$1" "+$diary_path/%Y/%m/%d.md")"
+		fi
+		vim "$f"
+	fi
+}
+
+# Forget the last command from history.
+oops() {
+	this="$(history | awk 'END {print $1}')"
+	((last = this - 1))
+	echo "deleting $last and $this:"
+	history | tail -2
+	history -d $this
+	history -d $last
+}
+
+# alias ls='ls --color=auto -h'
+alias ls='exa --group -F'
+alias ll='ls -al'
+alias rm='rm --interactive=never'
+
+alias vii='vim -R'
+
+alias udiff='diff -U3'
+alias figg='diff'
+
+alias https='http --default-scheme=https'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+alias less='less -N'
+
+l() {
+	if [[ -n "$1" ]]; then
+		if [[ -d "$1" ]]; then
+			ls -- "$1"
+		elif [[ -f "$1" ]]; then
+			less -- "$1"
+		else
+			# It's probably a flag
+			ls "$@"
+		fi
+	else
+		ls .
+	fi
+}
+
+la() {
+	if [[ -n "$1" ]]; then
+		if [[ -d "$1" ]]; then
+			ls -aa -- "$1" # stops exa complaining that it doesn't know what "-A" means
+		elif [[ -f "$1" ]]; then
+			less -- "$1"
+		else
+			ls -aa "$@"
+		fi
+	else
+		ls -aa .
+	fi
+}
+
+alias copy='xclip -sel clip'
+
+alias dd='dd status=progress'
+
+apt-version() {
+	apt-cache show "$@" | grep ^Version:
+}
+
+# https://askubuntu.com/a/366240/478436
+# apt-provides my-virtual-package
+apt-provides() {
+	apt-cache show $(apt-cache search "$1" | awk '{ print $1 }' | tr '\n' ' ') | sed -n '/^Package: \(.*\)$/ {s//\1/;h}; /^Provides:.*'"$1"'/ {x;p}'
+}
+
+update-nvm() {
+	pushd "$NVM_DIR"
+	git fetch origin
+	git checkout $(git describe --abbrev=0 --tags --match "v[0-9]*" origin)
+	popd
+	echo 'Restart your shell to finish upgrade.'
+}
+
+alias now='date "+%s"'
+whenis() {
+	date -d @"$1"
+}
+
+klog() {
+	sudo tee /dev/kmsg <<< "$@" > /dev/null
+}
+
+kannounce() {
+	klog ---------------- "$@" ----------------
+}
+
+alias ktail='dmesg -w'
+
+mkcd() {
+	mkdir -p -- "$1" && cd -- "$1"
+}
+
+echolinesfromto() {
+	sed -n -e "$1,$2p" "$3"
+}
+
+up() {
+	for _ in $(seq ${1:-1}); do
+		cd ..
+	done
+}
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+split_file() {
+	size="$1"
+	shift
+	split --suffix-length=3 --numeric-suffixes=1 "--bytes=$size" "$@"
+}
+
+say() {
+	text="$1"
+	shift
+	echo "$text" | espeak "$@"
+}
+
+# From reddit: <https://www.reddit.com/r/commandline/comments/1e6oev/24bit_aka_true_color_image_viewer_inside_your/>
+# Usage: img myimage.png
+# Recognises any image that ImageMagick can handle.
+img() {
+	for image in "$@"; do
+		convert -thumbnail $(tput cols) "$image" txt:- |\
+		awk -F '[)(,:]' '/white/{$9=$10=$11=255}!/^#/{if($2%2){printf"\033[48;2;"pR[$1]";"pG[$1]";"pB[$1]";38;2;"$9";"$10";"$11"m▄"}else{pR[$1]=$9;pG[$1]=$10;pB[$1]=$11}}'
+			echo -e "\e[0;0m"
+	done
+}
+
+# vim: set noet:

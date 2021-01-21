@@ -1,0 +1,36 @@
+# Include global inputrc
+$include /etc/inputrc
+# Up-arrow
+"\e[A": history-search-backward
+# Down-arrow
+"\e[B": history-search-forward
+# C-Pageup
+"\e[5;5~": beginning-of-history
+# C-Pagedown
+"\e[6;5~": end-of-history
+
+# Use a more reasonable definition of "word" for ^W.
+set bind-tty-special-chars off
+"\C-w": backward-kill-word
+
+# <https://www.topbug.net/blog/2017/07/31/inputrc-for-humans/>
+set colored-stats on
+set visible-stats on
+set colored-completion-prefix on
+set completion-prefix-display-length 10
+
+# Show all completions immediately if there is more than one.
+set show-all-if-ambiguous on
+# With the previous, still complete as far as possible.
+set show-all-if-unmodified on
+# Complete as far as possible before cycling through options.
+set menu-complete-display-prefix on
+
+# Cycle through options on repeated tab-presses, and backwards with shift-tab.
+"\t": menu-complete
+"\e[Z" menu-complete-backward
+
+# Disregard case for (tab-)completion. Does not affect i-search.
+set completion-ignore-case on
+
+set enable-bracketed-paste on

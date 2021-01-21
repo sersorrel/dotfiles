@@ -1,0 +1,78 @@
+# shellcheck shell=sh
+
+# ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
+
+# Executed in login shells.
+
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
+
+# Fix for https://gitlab.gnome.org/GNOME/gnome-shell/issues/1202
+# https://devtalk.nvidia.com/default/topic/1058469/linux/fresh-install-ubuntu-19-04-gives-intermittant-freezes-and-forces-coffee-breaks-/
+# ("nvLock" issues with binding of isaac)
+export __GL_MaxFramesAllowed=1
+
+# Stop some fullscreen games minimising themselves if they lose focus
+export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
+
+export PIPENV_SHELL_FANCY=1
+export PIPENV_VENV_IN_PROJECT=1
+if [ -d "$HOME/src/stubs" ]; then
+	export MYPYPATH="$HOME/src/stubs"
+fi
+export LESS="iMR"
+# Make winit applications (e.g. Alacritty) not do scaling
+export WINIT_HIDPI_FACTOR=1
+export WINIT_X11_SCALE_FACTOR=1
+
+export EDITOR=vim
+export VISUAL=vim
+export MANPAGER="vim -c MANPAGER -"
+# Recent coreutils versions have broken `ls`:
+# <https://unix.stackexchange.com/a/258687/226269>
+export QUOTING_STYLE=literal
+
+if [ -z "$XDG_CONFIG_HOME" ]; then
+	export XDG_CONFIG_HOME="$HOME/.config"
+fi
+if [ -z "$XDG_CACHE_HOME" ]; then
+	export XDG_CACHE_HOME="$HOME/.cache"
+fi
+if [ -z "$XDG_DATA_HOME" ]; then
+	export XDG_DATA_HOME="$HOME/.local/share"
+fi
+
+export PYENV_ROOT="$HOME/.pyenv"
+export GOPATH="$HOME/go"
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
+export ATOM_REPOS_HOME="$HOME/src"
+
+export NVM_DIR="$HOME/.local/share/nvm"
+# https://github.com/nvm-sh/nvm/issues/1242#issuecomment-346946356
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+
+export DEBFULLNAME="Ash Holland"
+export DEBEMAIL="{{ .email }}"
+
+PATH="$GOPATH/bin:$PYENV_ROOT/bin:$HOME/bin:$HOME/.local/bin:$PATH:$HOME/.cargo/bin:$HOME/.cabal/bin"
+
+# Disable trackpad scroll coasting
+synclient CoastingSpeed=0 >/dev/null 2>&1
+
+# if running bash
+# Note this must be after PATH is set up
+if [ -n "$BASH_VERSION" ]; then
+	# include .bashrc if it exists
+	if [ -f "$HOME/.bashrc" ]; then
+		. "$HOME/.bashrc"
+	fi
+fi
+
+# TODO: this is horrible and naughty
+export XDG_CURRENT_DESKTOP=Unity7

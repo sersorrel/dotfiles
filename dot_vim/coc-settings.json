@@ -1,0 +1,19 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": [],
+  "diagnostic.virtualText": true,
+  "diagnostic.errorSign": "🤔",
+  "diagnostic.warningSign": "🤨",
+  "diagnostic.infoSign": "💡",
+  "diagnostic.hintSign": "💭",
+  "diagnostic-languageserver.filetypes": {
+    "sh": "shellcheck"
+  },
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "~/.local/venvs/black/bin/black",
+  "python.jediPath": "~/.local/venvs/jedi/lib/python3.8/site-packages/",
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyPath": "~/.local/venvs/mypy/bin/mypy",
+  "rust.all_targets": false,
+  "rust.clippy_preference": "on",
+  "suggest.maxCompleteItemCount": 30
+}

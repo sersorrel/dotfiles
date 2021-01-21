@@ -1,0 +1,16 @@
+! https://unix.stackexchange.com/a/109441/226269
+! keysym Caps_Lock = Multi_key Caps_Lock
+! clear Lock
+! shift+space is underscore
+! keycode 65 = space underscore space
+! "qu0rty" https://twitter.com/mycoliza/status/1161307160254410753
+keycode  10 = 0 exclam 0 exclam onesuperior exclamdown
+keycode  11 = 1 quotedbl 1 at twosuperior oneeighth
+keycode  12 = 2 sterling 2 numbersign threesuperior sterling
+keycode  13 = 3 dollar 3 dollar EuroSign onequarter
+keycode  14 = 4 percent 4 percent onehalf threeeighths
+keycode  15 = 5 asciicircum 5 asciicircum threequarters fiveeighths
+keycode  16 = 6 ampersand 6 ampersand braceleft seveneighths
+keycode  17 = 7 asterisk 7 asterisk bracketleft trademark
+keycode  18 = 8 parenleft 8 parenleft bracketright plusminus
+keycode  19 = 9 parenright 9 parenright braceright degree
