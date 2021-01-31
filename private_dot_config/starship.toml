@@ -74,6 +74,14 @@ format = '$symbol'
 symbol = '⏻ '
 style = "bold fg:red"
 
+[custom.chezmoi]
+description = 'The dotfiles repo is out of date'
+when = '! chezmoi verify || ! test "$(chezmoi git -- status --short)" = ""'
+command = 'echo 0'
+format = '$symbol'
+symbol = '❗'
+style = 'bold fg:red'
+
 [custom.bgfill]
 description = 'fill remainder of line'
 command = 'echo 0'
