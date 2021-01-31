@@ -11,6 +11,7 @@ truncate_to_repo = false
 truncation_symbol = '…/'
 read_only = ' 🔒'
 read_only_style = ''
+format = 'in [$path]($style)[$read_only]($read_only_style) '
 
 [git_branch]
 only_attached = true
@@ -29,6 +30,9 @@ ahead = ">"
 behind = "<"
 diverged = "<>"
 
+[hostname]
+format = 'on [$hostname]($style) '
+
 [jobs]
 threshold = 0
 symbol = '✦ '
@@ -40,6 +44,9 @@ symbol = '↕️ '
 [status]
 disabled = false
 symbol = ''
+
+[username]
+format = '[$user]($style) '
 
 [custom.ssh_keys]
 description = "SSH key count"
