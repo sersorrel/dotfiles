@@ -55,10 +55,16 @@ on_click = "bluetooth toggle"
 
 [[block]]
 block = "memory"
+clickable = false
 format_mem = "{Mug}/{MTg}"
-format_swap = "{SUg}/{STg}"
 warning_mem = 90
-warning_swap = 90
+
+[[block]]
+block = "memory"
+display_type = "swap"
+clickable = false
+format_swap = "{SUg}/{STg}"
+warning_swap = 50
 
 [[block]]
 block = "custom"
