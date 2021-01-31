@@ -8,6 +8,8 @@ alias yadm2='yadm --yadm-repo ~/.yadm/repo2.git'
 chez() {
 	if [ $# -eq 0 ]; then
 		chezmoi cd
+	elif [ "$1" = changes ]; then
+		chez diff | interdiff -q - /dev/null | sed 's/^\(---\|+++\) /\x1b[1m\1 /g' | colordiff
 	else
 		chezmoi "$@"
 	fi
