@@ -777,6 +777,12 @@ set spellfile=$HOME/.vim/spell/general.utf-8.add
 set spelllang=en_gb
 
 " }}}
+" GVim {{{
+set guicursor+=a:blinkon0 " stop cursor blinking
+set guioptions-=m " hide menu
+set guioptions-=T " hide toolbar
+set guifont=Fira\ Code\ 10
+" }}}
 
 runtime vimrc_priv
 
