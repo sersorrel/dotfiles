@@ -21,6 +21,7 @@ net_wireless = "\uF1EB"
 [[block]]
 block = "custom"
 command = "test \"$(systemctl is-enabled --user dunst)\" = masked && printf '\uF1F6'"
+hide_when_empty = true
 
 [[block]]
 block = "disk_space"
