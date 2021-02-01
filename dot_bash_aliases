@@ -16,6 +16,8 @@ chez() {
 	fi
 }
 
+alias kdiff='kitty +kitten diff'
+alias kg='kitty +kitten hyperlinked_grep'
 
 alias trash-restore='restore-trash'
 alias xsel='xsel --logfile "$XDG_CACHE_HOME/xsel/xsel.log"'

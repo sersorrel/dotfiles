@@ -582,14 +582,15 @@ au InsertLeave * if exists("w:trail_match") | silent! call matchdelete(w:trail_m
 " Alacritty also has support, but Vim can't tell even when the terminfo is set
 " up correctly, because Vim uses termcap instead of terminfo, and 24-bit
 " colour info doesn't fit into termcap.
-if !empty($VTE_VERSION) && str2nr($VTE_VERSION) > 3900 || $TERM == "alacritty" || !empty($ALACRITTY_LOG)
+" Kitty likewise.
+if !empty($VTE_VERSION) && str2nr($VTE_VERSION) > 3900 || $TERM == "alacritty" || !empty($ALACRITTY_LOG) || $TERM == "xterm-kitty"
 	let &t_SI = "\<esc>[5 q"  " blinking I-beam in insert mode
 	let &t_SR = "\<esc>[3 q"  " blinking underline in replace mode
 	let &t_EI = "\<esc>[ q"  " default cursor (usually blinking block) otherwise
 endif
 
-" Alacritty behaves mostly like xterm, but Vim doesn't know that.
-if $TERM == "alacritty"
+" Alacritty and kitty behave mostly like xterm, but Vim doesn't know that.
+if $TERM == "alacritty" || $TERM == "xterm-kitty"
 	" 24-bit colour
 	let &t_8b = "\<esc>[48;2;%lu;%lu;%lum"
 	let &t_8f = "\<esc>[38;2;%lu;%lu;%lum"
