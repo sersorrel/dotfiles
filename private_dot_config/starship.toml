@@ -74,11 +74,19 @@ format = '$symbol'
 symbol = '⏻ '
 style = "bold fg:red"
 
-[custom.chezmoi]
-description = 'The dotfiles repo is out of date'
-when = '! chezmoi verify || ! test "$(chezmoi git -- status --short)" = ""'
+[custom.chezmoi-destination]
+description = 'There are differences between the installed dotfiles and the repo'
+when = '! chezmoi verify'
 command = 'echo 0'
-format = '$symbol'
+format = '$symbol\(dest\) '
+symbol = '❗'
+style = 'bold fg:red'
+
+[custom.chezmoi-source]
+description = 'There are uncommitted changes in the dotfiles repo'
+when = '! test "$(chezmoi git -- status --short)" = ""'
+command = 'echo 0'
+format = '$symbol\(repo\) '
 symbol = '❗'
 style = 'bold fg:red'
 
