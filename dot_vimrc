@@ -2,6 +2,9 @@ filetype plugin indent on
 syntax on
 
 " Plugins {{{
+"
+" Don't mess with things, vim-polyglot!
+let g:polyglot_disabled = ['sensible']
 
 " This if statement avoids each Plug erroring if vim-plug isn't installed.
 silent! if plug#begin()
