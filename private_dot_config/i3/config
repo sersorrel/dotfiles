@@ -515,6 +515,8 @@ for_window [title="Default - Wine desktop"] floating enable
 for_window [class="jetbrains-studio" title="win0"] floating enable
 for_window [class="Praat" title="SoundRecorder"] floating enable
 for_window [class="Praat" title="Praat Picture"] floating enable
+# the chrome wayback machine extension spawns a *weird* window
+for_window [title="Wayback Machine" class="()" window_type="normal"] floating enable
 
 no_focus [title="Steam - Self Updater"]
 
