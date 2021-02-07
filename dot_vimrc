@@ -359,6 +359,8 @@ endfunction
 " Let's make tab and s-tab navigate coc.nvim completions or indent/unindent.
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-t>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>"
+" workaround for https://github.com/neoclide/coc-tabnine/issues/35
+imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<Plug>(PearTreeExpand)"
 " Make K show "documentation" aka the hover card.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
