@@ -136,6 +136,7 @@ bindsym $mod+numbersign exec exec show-board
 
 # kill focused window
 bindsym $mod+Shift+q kill
+bindsym button2 nop
 bindsym --release button2 kill
 
 # keyboard volume controls
