@@ -738,6 +738,8 @@ endfunction
 command Diff call Diff()
 command Doff call Doff()
 
+command -bang Q qa
+
 " }}}
 " Autocommands {{{
 
