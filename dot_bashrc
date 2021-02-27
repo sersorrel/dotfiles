@@ -245,6 +245,8 @@ nvm() {
 	nvm "$@"
 }
 
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
+
 notices | sed 's/^/! /'
 
 # [ -e ~/.motd ] && shuf -n1 ~/.motd
