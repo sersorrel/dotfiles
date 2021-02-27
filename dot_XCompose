@@ -31,6 +31,10 @@ include "%L"
 <Multi_key> <numbersign> <m> : "𝆐" U1D190 # MUSICAL SYMBOL MEZZO
 
 ## Maths
+<Multi_key> <3> <equal> : "≡" U2261 # IDENTICAL TO
+<Multi_key> <equal> <3> : "≡" U2261 # IDENTICAL TO
+<Multi_key> <exclam> <3> <equal> : "≢" U2262 # NOT IDENTICAL TO
+<Multi_key> <exclam> <equal> <3> : "≢" U2262 # NOT IDENTICAL TO
 <Multi_key> <p> <i> : "π" U03C0 # GREEK SMALL LETTER PI
 <Multi_key> <asciitilde> <equal> : "≈" U2248 # ALMOST EQUAL TO
 <Multi_key> <equal> <asciitilde> : "≈" U2248 # ALMOST EQUAL TO
