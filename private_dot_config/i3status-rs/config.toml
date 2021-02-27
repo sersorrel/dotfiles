@@ -75,8 +75,9 @@ interval = 10
 
 [[block]]
 block = "custom"
-cycle = ["con --icon", "coff --icon"]
-interval = 1000000000
+command = "if systemctl --user is-active --quiet picom; then printf '\uf302'; else printf '\uf03e'; fi"
+on_click = "if systemctl --user is-active --quiet picom; then systemctl --user stop picom; else systemctl --user start picom; fi"
+interval = 120
 
 [[block]]
 block = "battery"
