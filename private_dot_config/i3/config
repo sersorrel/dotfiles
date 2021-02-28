@@ -370,6 +370,10 @@ exec_always --no-startup-id exec backandforthd
 bindsym Mod1+Tab exec outputbackandforth
 bindsym Mod1+Shift+Tab exec i3-msg "move container to output $(outputbackandforth -n)" && outputbackandforth
 exec_always --no-startup-id exec outputbackandforthd
+# switch between containers
+bindsym $textier+r exec containerbackandforth
+exec_always --no-startup-id exec containerbackandforthd
+exec --no-startup-id exec xcape -e "Super_L=Alt_L|Super_L|Shift_L|Control_L|r"
 
 # bindsym Ctrl+Mod1+a exec keepass2 --auto-type
 
