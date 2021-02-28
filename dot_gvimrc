@@ -1,0 +1,3 @@
+" Paste with ctrl-shift-v (since gvim can use ctrl-shift!)
+noremap <C-S-v> <C-r><C-o>+
+inoremap <C-S-v> <C-r><C-o>+
