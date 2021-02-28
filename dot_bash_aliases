@@ -3,6 +3,7 @@
 test -e ~/src/rn/rn && source ~/src/rn/rn
 
 alias t='~/src/t/t.py --task-dir "$HOME" --list TASKS'
+alias v=gvim
 alias jrnk=jrnl
 alias yadm2='yadm --yadm-repo ~/.yadm/repo2.git'
 chez() {
