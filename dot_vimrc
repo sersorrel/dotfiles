@@ -790,7 +790,7 @@ set spelllang=en_gb
 set guicursor+=a:blinkon0 " stop cursor blinking
 set guioptions-=m " hide menu
 set guioptions-=T " hide toolbar
-set guifont=Fira\ Code\ 10
+set guifont=Iosevka\ 10
 " }}}
 
 runtime vimrc_priv
