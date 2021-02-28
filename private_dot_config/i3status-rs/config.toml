@@ -2,9 +2,9 @@
 name = "gruvbox-light"
 [theme.overrides]
 # Be transparent unless it's something important
-idle_bg = "#FFFFFF44"
-info_bg = "#FFFFFF44"
-good_bg = "#FFFFFF44"
+idle_bg = "#FFFFFF88"
+info_bg = "#FFFFFF88"
+good_bg = "#FFFFFF88"
 info_fg = "#3C3836FF"
 good_fg = "#3C3836FF"
 alternating_tint_bg = "#00000000"
