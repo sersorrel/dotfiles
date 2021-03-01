@@ -17,6 +17,11 @@ chez() {
 	fi
 }
 
+hgrep() {
+	this="$(history | awk 'END {print $1}')"
+	history | grep -v "^$this" | grep "$@"
+}
+
 alias kdiff='kitty +kitten diff'
 alias kg='kitty +kitten hyperlinked_grep'
 
