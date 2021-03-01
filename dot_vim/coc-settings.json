@@ -5,6 +5,7 @@
   "diagnostic.warningSign": "🤨",
   "diagnostic.infoSign": "💡",
   "diagnostic.hintSign": "💭",
+  "diagnostic.refreshOnInsertMode": true,
   "diagnostic-languageserver.filetypes": {
     "sh": "shellcheck"
   },
