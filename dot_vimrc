@@ -41,6 +41,7 @@ silent! if plug#begin()
 	Plug 'gyim/vim-boxdraw'			" Drawing with '+' in visual-block mode
 	Plug 'jeetsukumaran/vim-pythonsense'	" 'd' text object for Python docstrings
 	Plug 'jkramer/vim-checkbox'		" <leader>tt to toggle GFM checkboxes
+	Plug 'kana/vim-textobj-lastpat'		" '/' text object for search results
 	Plug 'ludovicchabant/vim-gutentags'	" Auto-generate tags files on save
 	Plug 'reedes/vim-textobj-quote'		" Smart quote support
 	Plug 'rbong/vim-crystalline'		" Pretty statusline
