@@ -292,6 +292,10 @@
     body = "*RATSIGNAL*"
     script = dunst-notify
 
+[slack]
+    appname = "Slack"
+    script = dunst-notify
+
 #[espeak]
 #    summary = "*"
 #    script = dunst_espeak.sh
