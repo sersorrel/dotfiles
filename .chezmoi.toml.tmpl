@@ -2,8 +2,39 @@
 {{- if not $email -}}
 {{- $email = promptString "email" -}}
 {{- end -}}
+{{- $personal := get . "personal" -}}
+{{- if eq $personal "" -}}
+{{- $personal = promptBool "personal" -}}
+{{- end -}}
+
+{{- $keepassDatabasePath := "" -}}
+{{- $keepassKeyFilePath := "" -}}
+{{- if $personal -}}
+{{- $keepassDatabasePath = get . "keepassDatabasePath" -}}
+{{- if not $keepassDatabasePath -}}
+{{ $keepassDatabasePath = promptString "keepass database path" -}}
+{{- end -}}
+{{- $keepassKeyFilePath = get . "keepassKeyFilePath" -}}
+{{- if not $keepassKeyFilePath -}}
+{{ $keepassKeyFilePath = promptString "keepass key file path" -}}
+{{- end -}}
+{{- end -}}
 
 umask = 0o22
 
 [data]
-email = "{{ $email }}"
+email = '''{{ $email }}'''
+personal = {{ $personal }}
+{{ if $personal -}}
+keepassDatabasePath = '''{{ $keepassDatabasePath }}'''
+keepassKeyFilePath = '''{{ $keepassKeyFilePath }}'''
+{{- end }}
+
+{{ if $personal -}}
+[keepassxc]
+{{ if lookPath "keepassxc.cli" -}}
+command = "keepassxc.cli"
+{{- end }}
+args = ["--key-file", '''{{ $keepassKeyFilePath }}''']
+database = '''{{ $keepassDatabasePath }}'''
+{{- end }}
