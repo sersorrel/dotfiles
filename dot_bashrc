@@ -31,7 +31,7 @@ notices() {
 	fi
 
 	if [[ -e /var/run/reboot-required ]]; then
-		printf 'The system needs a reboot.\n'
+		printf 'The system needs a reboot (%s)\n' "$(awk -F'\n' -v RS="" -v OFS=", " '$1=x$1' /var/run/reboot-required.pkgs)"
 	fi
 	if ! ssh-add -l >/dev/null; then
 		printf 'No SSH keys are known to the agent.\n'
