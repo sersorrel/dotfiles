@@ -3,18 +3,18 @@
 {{- $email = promptString "email" -}}
 {{- end -}}
 {{- $personal := get . "personal" -}}
-{{- if eq $personal "" -}}
+{{- if kindIs "string" $personal -}}
 {{- $personal = promptBool "personal" -}}
 {{- end -}}
 
 {{- $keepassDatabasePath := "" -}}
 {{- $keepassKeyFilePath := "" -}}
 {{- if $personal -}}
-{{- $keepassDatabasePath = get . "keepassDatabasePath" -}}
+{{- $keepassDatabasePath = get . "keepassdatabasepath" -}}
 {{- if not $keepassDatabasePath -}}
 {{ $keepassDatabasePath = promptString "keepass database path" -}}
 {{- end -}}
-{{- $keepassKeyFilePath = get . "keepassKeyFilePath" -}}
+{{- $keepassKeyFilePath = get . "keepasskeyfilepath" -}}
 {{- if not $keepassKeyFilePath -}}
 {{ $keepassKeyFilePath = promptString "keepass key file path" -}}
 {{- end -}}
