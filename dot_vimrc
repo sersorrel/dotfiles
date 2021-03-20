@@ -364,11 +364,12 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>"
 " workaround for https://github.com/neoclide/coc-tabnine/issues/35
 imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<Plug>(PearTreeExpand)"
 " Make K show "documentation" aka the hover card.
+" https://github.com/neoclide/coc.nvim/issues/869
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
-	If we're in vim documentation or a vim script, use :help instead.
+	" If we're in vim documentation or a vim script, use :help instead.
 	if index(["vim", "help"], &filetype) >= 0
-		execute "h".expand("<cword>")
+		execute "h ".expand("<cword>")
 	else
 		call CocAction("doHover")
 	endif
