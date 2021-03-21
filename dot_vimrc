@@ -28,6 +28,7 @@ silent! if plug#begin()
 	Plug 'airblade/vim-rooter'		" Change vim working dir to project root
 	Plug 'sersorrel/vim-manpager'		" Allow using vim as $MANPAGER
 	Plug 'editorconfig/editorconfig-vim'	" EditorConfig support
+	Plug 'reedes/vim-one'			" Automatically deal with swapfiles
 	if v:version < 801 || !has("patch-8.1.1365")
 		Plug 'ciaranm/securemodelines'	" ACE via modelines in Vim < 8.1.1365
 	endif
