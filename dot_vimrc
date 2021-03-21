@@ -158,8 +158,8 @@ let g:gitgutter_map_keys = 0
 " Stop vim-rooter echoing the working directory it's changing to
 let g:rooter_silent_chdir = 1
 
-" Don't generate tags for Python virtual environments.
-let g:gutentags_ctags_exclude = ['.venv/*', 'venv/*']
+" Don't generate tags for Python virtual environments etc.
+let g:gutentags_ctags_exclude = ['.venv/*', 'venv/*', 'node_modules/*', '*/node_modules/*', '.webpack/*', '*/.webpack/*']
 " Lets us do Fun Things
 let g:gutentags_define_advanced_commands = 1
 
