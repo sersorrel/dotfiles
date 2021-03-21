@@ -128,6 +128,9 @@ focus_follows_mouse no
 focus_wrapping no
 mouse_warping none
 
+# button10 always focuses the window you're pointing at (whether window contents or titlebar)
+bindsym --whole-window --exclude-titlebar button10 exec "xdotool windowfocus $(xdotool getmouselocation | sed 's/.*window://')"
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
