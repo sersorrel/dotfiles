@@ -23,7 +23,8 @@ hgrep() {
 }
 
 alias kdiff='kitty +kitten diff'
-alias kg='kitty +kitten hyperlinked_grep'
+alias kg='kitty +kitten hyperlinked_rg'
+alias kd='kitty +kitten hyperlinked_fd'
 
 alias trash-restore='restore-trash'
 alias xsel='xsel --logfile "$XDG_CACHE_HOME/xsel/xsel.log"'
