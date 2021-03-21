@@ -3,4 +3,15 @@ noremap <C-S-v> <C-r><C-o>+
 inoremap <C-S-v> <C-r><C-o>+
 xnoremap <C-S-c> "+y
 
+" Highlight occurrences of the selected word on double-click
+" https://vim.fandom.com/wiki/Highlight_all_search_pattern_matches
+function! s:makepattern(text)
+  let pat = escape(a:text, '\')
+  let pat = substitute(pat, '\_s\+$', '\\s\\*', '')
+  let pat = substitute(pat, '^\_s\+', '\\s\\*', '')
+  let pat = substitute(pat, '\_s\+',  '\\_s\\+', 'g')
+  return '\\V' . escape(pat, '\"')
+endfunction
+noremap <2-LeftMouse> <2-LeftMouse>:<c-u>let @/="<C-R>=<SID>makepattern(@*)<CR>"<CR>:set hls<CR>
+
 set linespace=2
