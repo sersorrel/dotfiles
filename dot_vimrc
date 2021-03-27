@@ -384,6 +384,7 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <F2> <Plug>(coc-rename)
+nmap <silent> <c-c> <Plug>(coc-float-hide)
 imap <silent> <c-c> <c-o><Plug>(coc-float-hide)
 
 " <leader>s toggles spellchecking.
