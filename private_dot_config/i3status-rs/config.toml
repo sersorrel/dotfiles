@@ -25,6 +25,13 @@ hide_when_empty = true
 
 [[block]]
 block = "disk_space"
+alias = "\uF15B" # file
+unit = "GiB"
+path = "/files"
+alert_absolute = true
+
+[[block]]
+block = "disk_space"
 alias = "\uF0A0" # hdd
 unit = "GiB"
 alert_absolute = true
