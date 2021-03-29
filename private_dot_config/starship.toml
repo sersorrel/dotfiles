@@ -1,4 +1,61 @@
-format = '🦉 $all'
+# format = '🦉 $all'
+
+format = """🦉 \
+$username\
+$hostname\
+$shlvl\
+$kubernetes\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$hg_branch\
+$docker_context\
+$package\
+$cmake\
+$dart\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$helm\
+$java\
+$julia\
+$kotlin\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$purescript\
+$python\
+$ruby\
+$rust\
+$scala\
+$swift\
+$terraform\
+$vagrant\
+$zig\
+$nix_shell\
+$conda\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$env_var\
+$crystal\
+$custom\
+$cmd_duration\
+\u001B\\[48;2;242;229;188m\u001B\\[K$line_break\
+$lua\
+$jobs\
+$battery\
+$time\
+$status\
+$shell\
+$character"""
 
 [character]
 success_symbol = '[\$](bold green)'
@@ -73,10 +130,3 @@ command = 'echo 0'
 format = '$symbol'
 symbol = '⏻ '
 style = "bold fg:red"
-
-[custom.bgfill]
-description = 'fill remainder of line'
-command = 'echo 0'
-style = 'bg:#f2e5bc'  # gruvbox light bg0_s
-when = 'true'
-format = "[\u001B\\[K]($style)"
