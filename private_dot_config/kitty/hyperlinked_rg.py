@@ -21,7 +21,7 @@ def write_hyperlink(write: Callable[[bytes], None], url: bytes, line: bytes, fra
 
 
 def main(args) -> None:
-    if not sys.stdout.isatty() and '--pretty' not in args:
+    if (not sys.stdin.isatty() or not sys.stdout.isatty()) and '--pretty' not in args:
         os.execlp('rg', 'rg', *args[1:])
     cmdline = ['rg', '--pretty', '--with-filename'] + args[1:]
     p = subprocess.Popen(cmdline, stdout=subprocess.PIPE)
