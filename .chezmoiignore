@@ -1,2 +1,6 @@
 /README.md
 /tags
+/.config/fish/conf.d/fzf.fish
+/.config/fish/functions/__fzf_*.fish
+/.config/fish/functions/fzf_key_bindings.fish
+/.config/fish/functions/fisher.fish
