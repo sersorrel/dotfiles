@@ -1,6 +1,10 @@
 filetype plugin indent on
 syntax on
 
+if &shell =~# 'fish$'
+    set shell=sh
+endif
+
 " Plugins {{{
 "
 " Don't mess with things, vim-polyglot!
