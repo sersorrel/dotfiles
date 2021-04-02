@@ -53,10 +53,7 @@ export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 export ATOM_REPOS_HOME="$HOME/src"
 export ANDROID_SDK_ROOT="$HOME/Android/Sdk/"
 
-export NVM_DIR="$HOME/.local/share/nvm"
-# https://github.com/nvm-sh/nvm/issues/1242#issuecomment-346946356
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+command -v fnm >/dev/null && eval "$(fnm env)"
 
 export DEBFULLNAME="Ash Holland"
 export DEBEMAIL="{{ .email }}"
