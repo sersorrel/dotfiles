@@ -16,5 +16,5 @@ end
 
 # Because who needs Bass, anyway?
 if status is-login
-    source ~/.profile || echo "~/.profile machine broke"
+    source ~/.profile || ! status is-interactive || echo "~/.profile machine broke"
 end
