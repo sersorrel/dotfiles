@@ -37,6 +37,9 @@ export MANPAGER="vim -c MANPAGER -"
 # <https://unix.stackexchange.com/a/258687/226269>
 export QUOTING_STYLE=literal
 
+# Silence some warnings from GTK <https://unix.stackexchange.com/q/230238/226269>
+export NO_AT_BRIDGE=1
+
 if [ -z "$XDG_CONFIG_HOME" ]; then
 	export XDG_CONFIG_HOME="$HOME/.config"
 fi
