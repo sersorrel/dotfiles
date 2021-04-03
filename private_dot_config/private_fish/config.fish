@@ -13,3 +13,8 @@ end
 function fish_greeting
     what
 end
+
+# Because who needs Bass, anyway?
+if status is-login
+    source ~/.profile || echo "~/.profile machine broke"
+end
