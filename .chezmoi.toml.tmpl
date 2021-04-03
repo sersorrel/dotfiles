@@ -38,3 +38,8 @@ command = "keepassxc.cli"
 args = ["--key-file", '''{{ $keepassKeyFilePath }}''']
 database = '''{{ $keepassDatabasePath }}'''
 {{- end }}
+
+{{ if lookPath "meld" -}}
+[merge]
+command = "meld"
+{{- end }}
