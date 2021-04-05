@@ -20,7 +20,7 @@ net_wireless = "\uF1EB"
 
 [[block]]
 block = "custom"
-command = "test \"$(systemctl is-enabled --user dunst)\" = masked && printf '\uF1F6'"
+command = "sh -c 'test \"$(systemctl is-enabled --user dunst)\" = masked && printf \uF1F6'"
 hide_when_empty = true
 
 [[block]]
@@ -59,7 +59,7 @@ speed_down = false
 
 [[block]]
 block = "custom"
-command = "if [ \"$(bluetooth)\" = \"bluetooth = on\" ]; then printf '\uf294'; else printf '\uf294 ×'; fi"
+command = "sh -c 'if [ \"$(bluetooth)\" = \"bluetooth = on\" ]; then printf \"\uf294\"; else printf \"\uf294 ×\"; fi'"
 on_click = "bluetooth toggle"
 
 [[block]]
@@ -77,13 +77,13 @@ warning_swap = 50
 
 [[block]]
 block = "custom"
-command = "test \"$(nvctl gpu query)\" = nvidia && { printf '\uf26c '; nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | sed -E 's@([[:digit:]]*)([[:digit:]])[[:digit:]]{2}, ([[:digit:]]*)([[:digit:]])[[:digit:]]{2}@\\1.\\2/\\3.\\4@'; }"
+command = "sh -c 'test \"$(nvctl gpu query)\" = nvidia && { printf \"\uf26c \"; nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | sed -E \"s@([[:digit:]]*)([[:digit:]])[[:digit:]]{2}, ([[:digit:]]*)([[:digit:]])[[:digit:]]{2}@\\\\1.\\\\2/\\\\3.\\\\4@\"; }'"
 interval = 10
 
 [[block]]
 block = "custom"
-command = "if systemctl --user is-active --quiet picom; then printf '\uf302'; else printf '\uf03e'; fi"
-on_click = "if systemctl --user is-active --quiet picom; then systemctl --user stop picom; else systemctl --user start picom; fi"
+command = "sh -c 'if systemctl --user is-active --quiet picom; then printf \"\uf302\"; else printf \"\uf03e\"; fi'"
+on_click = "sh -c 'if systemctl --user is-active --quiet picom; then systemctl --user stop picom; else systemctl --user start picom; fi'"
 interval = 120
 
 [[block]]
@@ -114,7 +114,7 @@ block = "uptime"
 block = "custom"
 # Hack: this refreshes the next lecture on click.
 # cycle = ["printf '\uF19C '; paste -d ' ' <(uoyweek) <(printf '•') <(pango-escape \"$(next-lecture)\")"]
-cycle = ["printf '\uF19C '; paste -d ' ' <(uoyweek)"]
+cycle = ["printf '\uF19C '; bash -c 'paste -d \" \" <(uoyweek)'"]
 interval = 120
 
 [[block]]
