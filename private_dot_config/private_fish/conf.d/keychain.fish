@@ -1,1 +1,1 @@
-keychain --eval --quiet --noask | source
+keychain --eval --quiet --noask | sed 's/ -U / /g' | source
