@@ -73,7 +73,7 @@ colors:
   # NB: we switch "black" and "white", since most software assumes that we use a dark theme.
   # Normal colors
   normal:
-    black:   '0xfbf17c'
+    black:   '0xfbf1c7'
     red:     '0xcc241d'
     green:   '0x98971a'
     yellow:  '0xd79921'
