@@ -48,7 +48,7 @@ $env_var\
 $crystal\
 $custom\
 $cmd_duration\
-\u001B\\[48;2;242;229;188m\u001B\\[K$line_break\
+\u001B\\[48;2;242;229;188m\u001B\\[K$line_break\u001B\\[49m\
 $lua\
 $jobs\
 $battery\
