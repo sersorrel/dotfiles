@@ -91,7 +91,7 @@ diverged = "<>"
 format = 'on [$hostname]($style) '
 
 [jobs]
-threshold = 0
+threshold = 1
 symbol = '✦ '
 
 [shlvl]
