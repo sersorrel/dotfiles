@@ -1,0 +1,9 @@
+set surround
+set commentary
+set argtextobj
+let g:argtextobj_pairs="(:),{:},[:],<:>"
+set ideajoin
+set keymodel+=startsel
+map ]g :action GotoNextError<CR>
+map [g :action GotoPreviousError<CR>
+imap <c-v> <c-o>:action $Paste<CR>
