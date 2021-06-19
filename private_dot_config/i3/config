@@ -418,6 +418,8 @@ bindsym $mod+Shift+f exec --no-startup-id lock
 bindsym $mod+Shift+p exec --no-startup-id sleep 1 && xset dpms force off && lock
 # lock screen and suspend (need the delay in case the lockscreen is being regenerated)
 bindsym $mod+Shift+BackSpace exec --no-startup-id "bash -c '{ notify-send -t 2000 Suspending...; sleep 10; test -e /tmp/screen-is-locked && sudo pm-suspend; } & lock'"
+# suspend, if already locked
+bindsym $textier+j exec --no-startup-id  "bash -c 'sleep 1; test -e /tmp/screen-is-locked && sudo pm-suspend'"
 
 # bindsym $mod+r exec i3-input -P "Reminder (time message): " -F "exec --no-startup-id remind %s"
 bindsym $mod+r exec --no-startup-id remind $(zenity --entry --text "Reminder (time message):" --title "New reminder" --width 400)
