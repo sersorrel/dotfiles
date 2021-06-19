@@ -569,60 +569,12 @@ focus_on_window_activation focus
 # Get the GTK theme, font, etc. set up
 exec --no-startup-id exec unity-settings-daemon
 
-# Make Polkit authentication dialogs work
-exec --no-startup-id exec /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
-
-# Maybe make the login keyring be unlocked automatically??
-# https://www.reddit.com/r/i3wm/comments/863l1j/gnomekeyring_in_i3/dw44qyc/
-exec --no-startup-id exec gnome-keyring-daemon --start
-
-# Compositor
-# exec --no-startup-id sh -c 'if [ "$(nvctl gpu query)" = "intel" ]; then compton --config /dev/null --backend glx; fi'
-
-# Tray icons
-# NetworkManager
-exec exec nm-applet
-exec exec blueman-applet
-# Audio tools
-# exec exec volumeicon
-# exec exec indicator-sound-switcher
-# Insync
-exec exec insync start
-# JetBrains Toolbox
-# exec ~/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox --minimize
-# Password manager
-# exec exec keepass2
-# Configure Nvidia stuff???
-exec --no-startup-id nvidia-settings --load-config-only
-# Nvidia GPU control
-exec exec ~/src/nv-applet/venv/bin/python -m nv_applet
-# exec exec ~/src/totp-applet/venv/bin/python -m totp_applet
-# Thermal monitoring, mostly
-# exec psensor
-# Screen colour shifting depending on the time of day
-exec exec redshift-gtk
-# Start snaps that should autostart (currently broken)
-# exec --no-startup-id snap userd --autostart
+exec dex --autostart
 
 exec --no-startup-id tail -f /var/log/Xorg.0.log | notify-grep nvLock
 
-# Correctly position monitors etc.
-exec --no-startup-id exec autorandr
-
 # Show wallpaper
 exec exec feh --bg-fill ~/Pictures/Wallpapers/default
-
-# Wallpaper++
-# exec --no-startup-id conky
-
-# Shiny workspace names/icons
-# exec_always --no-startup-id i3-workspace-names-daemon --pro
-
-# Mount Keybase filesystem
-# exec env KEYBASE_AUTOSTART=1 run_keybase
-
-# Notifications about updates
-exec exec update-notifier
 
 # Lock the screen when idle.
 # exec --no-startup-id xautolock -locker lock -time 10 -detectsleep
